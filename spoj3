@@ -1,0 +1,143 @@
+#include<stdio.h>
+void next_palindrome(int);
+int check_nine(int[],int);
+main()
+{
+    int t,k;
+    scanf("%d",&t);
+    while(t)
+    {
+        scanf("%d",&k);
+        next_palindrome(k);
+        t--;
+
+    }
+
+}
+void next_palindrome(int k)
+{   int i,nod,num,left,right,mid;
+    num=k;
+    for(nod = 0; num > 0; nod++)
+        num/= 10;
+
+    int digit[10];
+    for(i=nod-1;k>0;i--)
+    {
+        digit[i]=k%10;
+        k=k/10;
+
+    }
+
+if(check_nine(digit,nod))
+{   int j;
+    digit[0]=1;
+
+    for(j=1;j<nod;j++)
+        digit[j]=0;
+    digit[nod]=1;
+    for(i=0;i<=nod;i++)
+{
+    printf("%d",digit[i]);
+}
+
+}
+else
+{
+
+
+if((nod%2)==0)
+{
+    mid=(nod/2)-1;
+    left=mid;
+    right=mid+1;
+    while(left>=0)
+    {
+        if(digit[left]<=digit[right])
+        {
+            if((left==mid)&&(right==mid+1))
+            {
+                digit[left]+=1;
+                digit[right]=digit[left];
+            }
+            else
+                digit[right]=digit[left];
+        }
+        else
+            digit[right]=digit[left];
+
+        left--;
+        right++;
+    }
+}
+
+else
+{   mid=(nod-1)/2;
+    if(mid==0)
+        {
+          digit[0]=1;
+          digit[1]=1;
+          nod=2;
+          return;
+        }
+
+    left=mid-1;
+    right=mid+1;
+    while(left>=0)
+    {
+    if((left==mid-1)&&(right==mid+1))
+
+    {
+
+
+
+        if(digit[left]<=digit[right])
+     {
+         if(digit[mid]!=9)
+        { digit[mid]+=1;
+          digit[right]=digit[left];
+        }
+        else
+        {
+            digit[mid]=0;
+            digit[left]+=1;
+            digit[right]=digit[left];
+        }
+     }
+     else
+        {
+        digit[right]=digit[left];
+       }
+
+    }
+    else
+    {
+        digit[right]=digit[left];
+    }
+
+     left--;
+     right++;
+    }
+}
+
+
+for(i=0;i<nod;i++)
+{
+    printf("%d",digit[i]);
+}
+
+}
+}
+
+int check_nine(int a[],int n)
+{
+    int i,flag;
+    for(i=0;i<n;i++)
+    {
+        if(a[i]==9)
+            flag=1;
+        else
+            flag=0;
+
+    }
+    return flag;
+}
